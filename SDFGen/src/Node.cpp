@@ -3,15 +3,16 @@
 const std::string Node::labelArray ="abcdefghijklmnopqrstuvwxyz";
 const uint Node::ioArray[4] = {1, 8, 16, 32};
 std::vector<Node*> Node::NodeDataBase;
+std::vector<Node*> Node::IpTypeSortedNodes[4];
 
 Node::Node()
 {
 
 }
 
-Node::Node(const std::string label1 , uint input = 0, uint output = 0, uint indeg = 0, uint outdeg = 0)
-: label(label1), inputType(input) , outputType(output), inDegree(indeg), outDegree(outdeg),
-inDegreeMAX(MAX_POSSIBLE_NODES), outDegreeMAX(MAX_POSSIBLE_NODES) // Just for a high integer
+Node::Node(const std::string label1 ,const std::string type, uint input = 0, uint output = 0, uint indeg = 0, uint outdeg = 0)
+: label(label1),nodeType(type)  ,inputType(input) , outputType(output), inDegree(indeg),
+outDegree(outdeg), inDegreeMAX(MAX_POSSIBLE_NODES), outDegreeMAX(MAX_POSSIBLE_NODES) // Just for a high integer
 {
 }
 
@@ -47,7 +48,11 @@ std::string Node::getLabel()
     return label;
 }
 
-
+/* Get Node Type*/
+std::string Node::getNodeType()
+{
+    return nodeType;
+}
 /*To get Input Type */
 
 uint Node::getInputType()
@@ -89,6 +94,22 @@ void Node::setInDegreeMax(int value)
 void Node::setOutDegreeMax(int value)
 {
     outDegreeMAX = value;
+}
+
+
+int Node::getInputMatch(uint num)
+{
+    int ret;
+    switch(num)
+    {
+        case 1: ret = 0; break;
+        case 8: ret = 1; break;
+        case 16: ret = 2; break;
+        case 32: ret = 3; break;
+        default: ret = -1;
+    }
+
+    return ret;
 }
 
 /*Increment or Decrements the INDegree of Node */
@@ -146,8 +167,10 @@ bool Node::buildDataBase(uint nodes_number = MAX_POSSIBLE_NODES)
             ss << Node::labelArray.substr(i, 1) << "_"  << Node::ioArray[j] << "_" << Node::ioArray[k] ;
 
 
-            Node n(ss.str(), Node::ioArray[j], Node::ioArray[k]);
+            Node n(ss.str(), labelArray.substr(i,1) ,Node::ioArray[j], Node::ioArray[k]);
             Node::NodeDataBase.push_back(new Node(n));
+            // Input type Sorted
+            Node::IpTypeSortedNodes[j].push_back(new Node(n));
         }
     }
 

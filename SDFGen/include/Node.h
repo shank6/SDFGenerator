@@ -51,7 +51,7 @@ class Node
         enum Modify { increase, decrease };
 
         Node();
-        Node(const std::string label1, uint input, uint output, uint indegree, uint outdegree );
+        Node(const std::string label1, const std::string type ,uint input, uint output, uint indegree, uint outdegree );
         Node(Node *);   // Copy a node pointer
         virtual ~Node();
 
@@ -65,6 +65,8 @@ class Node
         int getInDegree();
         int getOutDegree();
 
+        std::string getNodeType();
+
         int getInDegreeMax();
         int getOutDegreeMax();
         void setInDegreeMax(int maxVal);
@@ -74,6 +76,9 @@ class Node
         void modifyInDegree(Modify Mode);
         /*Increment or Decrements  the OutDegree of Node */
         void modifyOutDegree(Modify Mode);
+
+
+
 
 // Use implicit copy construtor for now
 /*
@@ -86,9 +91,12 @@ class Node
 * And the tools to build it
 */
         static std::vector<Node*> NodeDataBase;
+        static std::vector<Node*> IpTypeSortedNodes[4];
         static bool buildDataBase(uint nodes_num );
         static void printDataBase();
         static void printNodesinDataBase(std::vector<Node*>* NodeList);
+               /* A Misc Function to get the vector list number */
+        static int getInputMatch(uint num);
 
     protected:
         std::string label;
@@ -102,6 +110,8 @@ class Node
 
         int inDegreeMAX;
         int outDegreeMAX;
+
+        std::string nodeType;
 
         static const std::string labelArray;
         static const uint ioArray[4];

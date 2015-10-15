@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1440771286 source:/home/artist/workspace/SDFGenerator/SDFGen/src/Node.cpp
+1442276738 source:/home/artist/workspace/SDFGenerator/SDFGen/src/Node.cpp
 	"Node.h"
 
-1440771243 /home/artist/workspace/SDFGenerator/SDFGen/include/Node.h
+1442276692 /home/artist/workspace/SDFGenerator/SDFGen/include/Node.h
 	<string>
 	<iostream>
 	<fstream>
@@ -10,20 +10,20 @@
 	<sstream>
 	<vector>
 
-1440867838 source:/home/artist/workspace/SDFGenerator/SDFGen/src/SDFGenerator.cpp
+1444951235 source:/home/artist/workspace/SDFGenerator/SDFGen/src/SDFGenerator.cpp
 	"SDFGenerator.h"
 
-1440786428 /home/artist/workspace/SDFGenerator/SDFGen/include/SDFGenerator.h
+1444951408 /home/artist/workspace/SDFGenerator/SDFGen/include/SDFGenerator.h
 	"Node.h"
 	"Edge.h"
-	"AnalysisSDF.h"
 	<exception>
 	<stdexcept>
 	<algorithm>
-
-1440868230 source:/home/artist/workspace/SDFGenerator/SDFGen/main.cpp
-	<iostream>
 	"AnalysisSDF.h"
+
+1444951388 source:/home/artist/workspace/SDFGenerator/SDFGen/main.cpp
+	<iostream>
+	"MISC_CALCULATIONS.h"
 
 1440765769 /home/artist/workspace/SDFGenerator/SDFGen/include/Edge.h
 	"Node.h"
@@ -33,9 +33,15 @@
 	"Edge.h"
 	<string>
 
-1440773209 source:/home/artist/workspace/SDFGenerator/SDFGen/src/AnalysisSDF.cpp
+1441375922 source:/home/artist/workspace/SDFGenerator/SDFGen/src/AnalysisSDF.cpp
 	"AnalysisSDF.h"
 
-1440773093 /home/artist/workspace/SDFGenerator/SDFGen/include/AnalysisSDF.h
+1441322007 /home/artist/workspace/SDFGenerator/SDFGen/include/AnalysisSDF.h
 	"SDFGenerator.h"
+
+1444867358 source:/home/artist/workspace/SDFGenerator/SDFGen/src/MISC_CALCULATIONS.cpp
+	"MISC_CALCULATIONS.h"
+
+1444867277 /home/artist/workspace/SDFGenerator/SDFGen/include/MISC_CALCULATIONS.h
+	"AnalysisSDF.h"
 

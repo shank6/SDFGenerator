@@ -36,11 +36,13 @@
 		</Compiler>
 		<Unit filename="include/AnalysisSDF.h" />
 		<Unit filename="include/Edge.h" />
+		<Unit filename="include/MISC_CALCULATIONS.h" />
 		<Unit filename="include/Node.h" />
 		<Unit filename="include/SDFGenerator.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/AnalysisSDF.cpp" />
 		<Unit filename="src/Edge.cpp" />
+		<Unit filename="src/MISC_CALCULATIONS.cpp" />
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/SDFGenerator.cpp" />
 		<Extensions>

@@ -1,9 +1,8 @@
 #ifndef ANALYSISSDF_H
 #define ANALYSISSDF_H
 
+
 #include "SDFGenerator.h"
-
-
 
 class AnalysisSDF
 {
@@ -14,7 +13,7 @@ class AnalysisSDF
         static void Initialize() throw(std::string); // Initializes the Database
         static bool checkMinEdges(uint, uint); // Check for a possibility of a SDF
         static bool checkSDFPath();
-        AnalysisSDF();
+          AnalysisSDF();
 
         virtual ~AnalysisSDF();
     protected:

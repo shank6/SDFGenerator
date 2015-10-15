@@ -5,7 +5,7 @@ void AnalysisSDF::Initialize() throw(std::string)
 {
 
     bool ret_value = Node::buildDataBase(MAX_POSSIBLE_NODES);   // build the Node database
-    std::srand(time(NULL)); // initialize the random seed
+//    std::srand(time(NULL)); // initialize the random seed
 
     if(!ret_value)
     {
@@ -31,6 +31,7 @@ void AnalysisSDF::dottyFontFix(std::ofstream *obj)
 
     *obj << ss.str();
 }
+
 
 AnalysisSDF::AnalysisSDF()
 {

@@ -3,12 +3,11 @@
 
 #include "Node.h"
 #include "Edge.h"
-#include "AnalysisSDF.h"
+
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-
-
+#include "AnalysisSDF.h"
 
 class SDFGenerator
 {
@@ -40,6 +39,7 @@ class SDFGenerator
         void makeEdge(Node* n1, Node *n2) throw(std::logic_error);
         /* Delete Edge from the Graph */
         void deleteEdge(Edge* e) throw();
+        void removeDuplicateNode() throw(std::logic_error);
         /* Removes Duplicated from the list */
         void removeDuplicates() throw(std::logic_error);
 
@@ -74,6 +74,9 @@ class SDFGenerator
         /* Checks whether last node */
         bool isLast(Node* n)throw(std::logic_error);
 
+        /* gets the reference to the Node List */
+        std::vector<Node*>* getNodeList();
+
         //MISC METHODS - LATER DELETE
         std::vector<Edge*>* getEdgeList() ;
 
@@ -91,6 +94,7 @@ class SDFGenerator
 
     /* Predicate for unique- */
     bool edgeUnique(Edge*, Edge*);
+    bool nodeUnique(Node*, Node*);
 
     // Misc Variables
     findNodeType Ntype;

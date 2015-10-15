@@ -39,9 +39,12 @@ void SDFGenerator::buildGraph() throw()
         addNodestoGraph(*n);
         setFirst(n);
 
+
+
         std::cout << "Building Graph" << std::endl;
 
         buildAllConnected();
+
         int netEdges = numEdges - getActualEdgeCount();
 
 
@@ -49,9 +52,30 @@ void SDFGenerator::buildGraph() throw()
         {
             Node* n1 = findNode(randomType, &nodes, NULL);
             Node* n2 = findNode(compatitbleType, &nodes, n1);
+
+           // std::cout << "Node found : " << n1->getLabel() << "   " << n2->getLabel() << std::endl;
+
             makeEdge(n1, n2);
             netEdges--;
         }
+
+
+
+         if(debug)
+        {
+
+
+            std::cout << "Node List " << std::endl;
+
+            std::vector<Node*> *vec = &nodes;
+
+            for(auto it : *vec)
+            {
+                std::cout << it->getLabel() << " : " ;
+            }
+
+        }
+
 
         // Set the last Node
         Node* last = nodes.back();
@@ -78,17 +102,33 @@ void SDFGenerator::buildAllConnected() throw()
 {
     try
     {
-        for(uint i = 0; i < numNodes ; i++)
+        for(uint i = 0; i < numNodes - 1 ; i++)
         {
             Node* n1 = nodes.at(i);
+
+            if(bool debug = false)
+            {
+                std::cout << "Finding Compatitble " << std::endl;
+            }
             Node* n2 = findNode(compatitbleType, &Node::NodeDataBase, n1);
 
             addNodestoGraph(*n2);
+
+
+            if(bool debug =  false)
+            {
+                std::cout << "Building Edge  " << std::endl;
+            }
             makeEdge(n1, n2);
+               if(bool debug =  false)
+            {
+                std::cout << "Edge Built  " << std::endl;
+            }
         }
         // Removes Duplicate Nodes in List
-        std::vector<Node*>::iterator it = std::unique (nodes.begin(), nodes.end());
-        nodes.resize(std::distance(nodes.begin(), it));
+       // std::vector<Node*>::iterator it = std::unique (nodes.begin(), nodes.end());
+       // nodes.resize(std::distance(nodes.begin(), it));
+            removeDuplicateNode();
     }
     catch(...)
     {
@@ -170,7 +210,7 @@ void SDFGenerator::deleteEdge(Edge *e) throw()
     }
     return;
 }
-/* Predicate Function for unique */
+/* Compare Edges for equality */
 bool SDFGenerator::edgeUnique(Edge* e1, Edge* e2)
 {
     std::pair<Node*, Node*> edge1pair = e1->getSourceAndDest();
@@ -182,6 +222,50 @@ bool SDFGenerator::edgeUnique(Edge* e1, Edge* e2)
         return false;
     }
     return true;
+
+}
+/* Compare Nodes for equality */
+bool SDFGenerator::nodeUnique(Node* n1, Node* n2)
+{
+
+    if((n1->getLabel() == n2->getLabel()) && (n1->getInputType() == n2->getInputType())
+    &&(n1->getOutputType() == n2->getOutputType()))
+    {
+        return false;
+    }
+    return true;
+}
+
+
+/* Removes Duplicate Nodes*/
+
+void SDFGenerator::removeDuplicateNode() throw(std::logic_error)
+{
+    bool debug = false;
+    try
+    {
+        if(nodes.size() <= 1)
+            return;
+        if(debug)
+            printNodesInGraph(PrintOp::Console, NULL);
+        for(std::vector<Node*>::iterator it = nodes.begin(); it!= nodes.end(); it++)
+        {
+            for(std::vector<Node*>::iterator j = it + 1; j!= nodes.end(); j++)
+            {
+                if(nodeUnique((*it), *j))
+                {
+                    continue;
+                }
+                else
+                {
+                    nodes.erase(j);
+                    j--;
+                }
+            }
+        }
+    }
+    catch(...)
+    {}
 
 }
 
@@ -293,17 +377,27 @@ Node* SDFGenerator::findNode(findNodeType NodeType,  std::vector<Node*>* Node_Li
 /* Find the Node and return a reference - compatible type */
 Node* SDFGenerator::findCompatitbleNode(Node* n, std::vector<Node*>* Node_list) throw(std::out_of_range)
 {
-
+    uint output_type = n->getOutputType();
+    int index = Node::getInputMatch(output_type);
     int i = 0;
+   // Node_list = &Node::IpTypeSortedNodes[index];
+
     uint max_size = Node_list->size();
 
+    bool debug = false;
+    if(debug)
+    {
+        std::cout << "Finding Compatitble Node" << std::endl;
+    }
+
+  //  std:: cout << " WAITING HERE" << std::endl;
     try
-    {   uint output_type = n->getOutputType();
+    {
         do
         {
 
             i  = rand() % max_size;
-        //  AnalysisSDF::PrintRounds(); // Just to check the probablility - works avg - 5 tries
+      //    AnalysisSDF::PrintRounds(); // Just to check the probablility - works avg - 5 tries
         } while(Node_list->at(i)->getInputType() != output_type);
         // Keep looping till a compatitble Node is found (probablility = 1/4)
     }
@@ -497,6 +591,12 @@ uint SDFGenerator::getActualEdgeCount()
     return (actualEdges = edges.size());
 
 }
+
+std::vector<Node*>* SDFGenerator::getNodeList()
+{
+     return &nodes;
+}
+
 bool SDFGenerator::isFirst(Node* n) throw(std::logic_error)
 {
     try
@@ -529,3 +629,5 @@ bool SDFGenerator::isLast(Node* n) throw(std::logic_error)
         throw std::logic_error("last Node not set");
     }
 }
+
+
